@@ -444,6 +444,45 @@ const StyledMessageDanger = styled(StyledMessage)`
 
 ---
 
+## Use TS Generics in Styled Components
+
+**Don't**
+
+```javascript
+type ButtonProps = {
+  margin?: string;
+  color?: string;
+  height?: string;
+}
+
+const StyledButton = styled.button`
+  width: ${(props: StyledButtonProps) => (props.width ? props.width : 'inherit')};
+  color: ${(props: StyledButtonProps) => (props.color ? props.color : 'inherit')};
+  height: ${(props: StyledButtonProps) => (props.height ? props.height : 'inherit')};
+`;
+```
+
+**Do**
+
+```javascript
+type StyledItemProps = {
+  height?: string;
+  margin?: string;
+};
+
+const StyledSearchInputWrapper = styled.div<StyledItemProps>`
+  height: ${({ height }) => height || '4rem'};
+  margin: ${({ margin }) => margin || '0'};
+`;
+```
+
+**Why**
+
+- Cleaner Code
+- Removes props repetition via destructuring
+
+---
+
 ## Pitfalls with the useState React hook
 
 **Don't**
